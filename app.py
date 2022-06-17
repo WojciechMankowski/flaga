@@ -6,8 +6,6 @@ app=Flask(__name__)
 
 @app.route('/')
 def index():
-    
-    
     text = open('xd.txt').read()
     
     return render_template("index.html", text=text)
