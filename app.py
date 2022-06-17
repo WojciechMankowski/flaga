@@ -23,5 +23,5 @@ def contact():
 # podziękowania zapisania na newsletter
 # podziękowania za wysłanie wiadomości
     
-if __name__=_main__":
+if __name__=="__main__":
     app.run()
