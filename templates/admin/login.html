@@ -1,0 +1,12 @@
+
+<form method="post">
+    {% if messege %}
+    <p> {{ messege }}</p>
+    {% endif %}
+    {{ form.csrf_token }}
+    {{ form.name.label }}
+    {{ form.name}}
+    {{ form.password.label }}
+    {{ form.password}}
+    <input type="submit">
+</form>
