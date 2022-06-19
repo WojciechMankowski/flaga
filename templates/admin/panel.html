@@ -1,5 +1,9 @@
 {% extends 'admin/BaseAdmin.html' %}
 
 {% block main %}
-PANEL
+<div>
+    <h3>
+        <a href="{{ url_for('addpost') }}">Dodaj nowy post</a>
+    </h3>
+</div>
 {% endblock %}

@@ -1,12 +1,17 @@
+{% extends 'admin/BaseAdmin.html' %}
 
-<form method="post">
+{% block main %}
+<form method="post" class="form-group form">
     {% if messege %}
     <p> {{ messege }}</p>
     {% endif %}
     {{ form.csrf_token }}
     {{ form.name.label }}
-    {{ form.name}}
+    {{ form.name(class="form-control")}}
     {{ form.password.label }}
-    {{ form.password}}
-    <input type="submit">
+    {{ form.password(class="form-control")}}
+<br/>
+    <input type="submit" value="Zaloguj się" class="btn btn-primary">
 </form>
+{% endblock %}
+
