@@ -1,6 +1,7 @@
+import os
 from datetime import datetime
 
-from flask import Flask, render_template, redirect, url_for, session, request
+from flask import Flask, render_template, redirect, url_for, session, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import ForeignKey
@@ -9,12 +10,14 @@ from werkzeug.utils import secure_filename
 from Forms.AddPost import add_new_post
 from Forms.Login import Login
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/db.db'
+app = Flask(__name__, static_folder='static')
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://admin:Wojtek92!@localhost:5432/blog"
 app.config['SECRET_KEY'] = 'my_screat_key'
-
+app.config['UPLOAD_FOLDER'] = "./static/IMAG"
+ALLOWED_EXTENSIONS = ["jpg", "png"]
 db = SQLAlchemy(app)
-SQLALCHEMY_TRACK_MODIFICATIONS = False
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -62,8 +65,13 @@ class Comments(db.Model):
 
 @app.route('/')
 def index():
-    text = open('xd.txt').read()
-    return render_template("index.html")
+    list_poty = Post.query.all()
+    index = len(list_poty) - 1
+    post = []
+    while index != -1:
+        post.append(list_poty[index])
+        index -= 1
+    return render_template("index.html", list_poty=post)
 
 @app.route("/category")
 def category():
@@ -72,7 +80,13 @@ def category():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
 # pojedyńczy wpis
+@app.route("/<title>")
+def post(title: str):
+    post = Post.query.filter_by(slug=title).first()
+    return render_template("post.html", post=post)
+
 # podziękowania zapisania na newsletter
 # podziękowania za wysłanie wiadomości
 
@@ -98,6 +112,10 @@ def panel_admin():
     else:
         return redirect(url_for("login"))
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route("/admin/new_post", methods=["GET", "POST"])
 @login_required
 def addpost():
@@ -107,13 +125,20 @@ def addpost():
         data = datetime.now()
         if form.validate_on_submit() or request.method == "POST":
             slug = form.data["title"].replace(" ", "_")
-            image = form.data["image"].file.filename
-            print(image)
-            filename = f"IMAG/"
+            image = request.files["image"]
+            name_file = image.filename
+            if name_file == "":
+                flash('No selected file')
+                return redirect(request.url)
+            elif image and allowed_file(name_file):
+                filename = secure_filename(name_file)
+                patch = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                image.save(patch)
             new_post = Post(title=form.data["title"], slug=slug, author=author,
-                            date_posted=data, category=form.data["category"], content=form.content.data, Photo=filename)
+                            date_posted=data, category=form.data["category"],
+                            content=form.content.data, Photo=f"IMAG/{name_file}")
             db.session.add(new_post)
-            # db.session.commit()
+            db.session.commit()
         return render_template("admin/newpost.html", user=current_user.is_authenticated, form=form)
     else:
         return redirect(url_for("login"))

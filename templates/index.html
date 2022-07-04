@@ -1,5 +1,39 @@
 {% extends 'base.html' %}
 
 {% block main %}
-Strona główna
+<div class="row">
+    {% for post in list_poty %}
+    <div class="col">
+        <h2 class="title">
+            {{ post.title }}
+        </h2>
+        <img src="{{ url_for('static', filename=post.Photo) }}" class="rounded mx-auto d-block imag">
+        <div class="info">
+            <span class="author">Autor {{ post.author }}</span>
+            <span>
+                Data: {{ post.date_posted.date() }} , Kategoria: {{ post.category }}
+            </span> <br />
+
+
+        </div>
+        <div class="content">
+            <p>
+                {{ post.content[:200] }} ...
+            </p>
+        </div>
+        <div class="button">
+            <button>
+                <a href="{{ url_for('post', title=post.slug) }}">
+                    Czytaj więcej
+                </a>
+            </button>
+        </div>
+
+    </div>
+
+    {% endfor %}
+</div>
+</div>
+
+
 {% endblock %}

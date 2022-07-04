@@ -4,6 +4,7 @@ const contact = document.getElementById("contact");
 
 const IsActive = () => {
   let name = window.location.pathname;
+  
   if (name == "/") {
     home.className = "nav-link active";
     contact.className = "nav-link";
