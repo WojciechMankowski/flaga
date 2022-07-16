@@ -11,7 +11,7 @@ from Forms.AddPost import add_new_post
 from Forms.Login import Login
 
 app = Flask(__name__, static_folder='static')
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://admin:Wojtek92!@localhost:5432/blog"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.db"
 app.config['SECRET_KEY'] = 'my_screat_key'
 app.config['UPLOAD_FOLDER'] = "./static/IMAG"
 ALLOWED_EXTENSIONS = ["jpg", "png"]
@@ -43,7 +43,7 @@ class User(db.Model):
         return self.authenticated
 
     def is_anonymous(self):
-        """False, as anonymous users aren't supported."""
+        """False, as anonymous users aren't.db supported."""
         return False
 
 class Post(db.Model):

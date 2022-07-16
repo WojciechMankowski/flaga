@@ -25,7 +25,7 @@ body {
   line-height: 1.5;
 }
 
-/* A elements that don't have a class get default styles */
+/* A elements that don't.db have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
 }
