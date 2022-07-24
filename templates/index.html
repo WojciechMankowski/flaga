@@ -2,6 +2,9 @@
 
 {% block main %}
 <div class="row">
+    {% if true_or_false%}
+        <h4>Tutaj pojawi się posty</h4>
+    {%endif%}
     {% for post in list_poty %}
     <div class="col">
         <h2 class="title">

@@ -9,7 +9,8 @@
 
 <img src="{{ url_for('static', filename=post.Photo) }}" class="rounded mx-auto d-block imag">
 <div class="content">
-    {{ post.content}}
+    {{ post.content|safe}}
+
 </div>
 <div class="info">
     <span class="author">Autor {{ post.author }}</span>

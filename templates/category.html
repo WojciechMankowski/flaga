@@ -1,5 +1,24 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block main %}
+<div class="category">
+	<h3>
+		Wpisy z kategori:
+		<strong> {{category}}</strong>
+	</h3>
 
-{% block main %}
-Strona kategorie
+	<div class="posts">
+		{% for item in list_posty %}
+		<div class="img">
+			<img
+				src="{{ url_for('static', filename=item.Photo) }}"
+				class="rounded mx-auto d-block imag"
+			/>
+		</div>
+		<div class="description">
+			<h3>{{item.title}}</h3>
+			<p>{{item.content[:200] }}...</p>
+			<button>Czytaj więcej</button>
+		</div>
+		{% endfor %}
+	</div>
+</div>
 {% endblock %}

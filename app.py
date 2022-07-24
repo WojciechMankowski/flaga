@@ -10,6 +10,11 @@ from werkzeug.utils import secure_filename
 from Forms.AddPost import add_new_post
 from Forms.Login import Login
 
+# server name = wojtek92!
+# hasło Aparat22
+# name db blog
+
+
 app = Flask(__name__, static_folder='static')
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.db"
 app.config['SECRET_KEY'] = 'my_screat_key'
@@ -61,7 +66,6 @@ class Comments(db.Model):
     author = db.Column(db.String(50))
     comment = db.Column(db.Text)
     id_posta = db.Column(db.Integer, ForeignKey("post.id"))
-    # ForeignKey
 
 @app.route('/')
 def index():
@@ -71,22 +75,34 @@ def index():
     while index != -1:
         post.append(list_poty[index])
         index -= 1
-    return render_template("index.html", list_poty=post)
+    lenpost = len(post)
+    true_or_false = lenpost == 0
+    return render_template("index.html", list_poty=post, true_or_false=true_or_false)
 
-@app.route("/category")
+@app.route("/categories")
 def category():
-    return render_template("category.html")
-
+    list_posty = Post.query.all()
+    category_list = []
+    print(category)
+    for post in list_posty:
+        category_list.append(post.category)
+    return render_template("categories.html", category=category_list)
+@app.route("/category/<category>")
+def Category(category:str):
+    list_posty = Post.query.filter_by(category=category)
+    return render_template("category.html", category=category, list_posty=list_posty)
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
 
-# pojedyńczy wpis
 @app.route("/<title>")
 def post(title: str):
     post = Post.query.filter_by(slug=title).first()
     return render_template("post.html", post=post)
 
+@app.route("/portfolio")
+def portfolio():
+    return render_template("portfolio.html")
 # podziękowania zapisania na newsletter
 # podziękowania za wysłanie wiadomości
 
@@ -121,7 +137,7 @@ def allowed_file(filename):
 def addpost():
     if current_user.is_authenticated:
         form = add_new_post()
-        author =current_user.name
+        author ="Wojciech Mankowski"
         data = datetime.now()
         if form.validate_on_submit() or request.method == "POST":
             slug = form.data["title"].replace(" ", "_")
@@ -154,5 +170,4 @@ def user_loader(user_id):
     return User.query.get(user_id)
 
 if __name__=="__main__":
-
     app.run()
