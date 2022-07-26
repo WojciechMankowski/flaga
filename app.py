@@ -85,7 +85,10 @@ def category():
     category_list = []
     print(category)
     for post in list_posty:
-        category_list.append(post.category)
+        if (post.category in category_list):
+            ...
+        else:
+            category_list.append(post.category)
     return render_template("categories.html", category=category_list)
 @app.route("/category/<category>")
 def Category(category:str):
