@@ -12,7 +12,7 @@ from ListCategory import list_category, category_images
 # server name = wojtek92!
 # hasło Aparat22
 # name db blog
-
+# from PortfolioClasses import Portfolio, blog, learngowa, shop, pykruter, WeatherAppInReact
 
 app = Flask(__name__, static_folder='static')
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.db"
@@ -65,7 +65,12 @@ class Comments(db.Model):
     author = db.Column(db.String(50))
     comment = db.Column(db.Text)
     id_posta = db.Column(db.Integer, ForeignKey("post.id"))
-
+class PortfolioDB(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250))
+    programmingLanguage= db.Column(db.String(250))
+    description =db.Column(db.String(250))
+    url= db.Column(db.String(250))
 @app.route('/')
 def index():
     list_poty = Post.query.all()
@@ -96,7 +101,9 @@ def post(title: str):
 
 @app.route("/portfolio")
 def portfolio():
-    return render_template("portfolio.html")
+    listportfolio = PortfolioDB.query.all()
+
+    return render_template("portfolio.html", listportfolio=listportfolio)
 # podziękowania zapisania na newsletter
 # podziękowania za wysłanie wiadomości
 

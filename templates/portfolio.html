@@ -1,1 +1,16 @@
-{% extends 'base.html' %} {% block main %} Portfolio {% endblock %}
+{% extends 'base.html' %} {% block main %}
+
+<h2>Moje portfolio</h2>
+<div class=" portfolio">
+	{% for item in listportfolio%}
+	<div class="project">
+		<h3>{{item.name}}</h3>
+		<span>{{item.programmingLanguage}}</span>
+		<p>{{item.description}}</p>
+		<a href="{{item.url}}" target="_blank" rel="noopener noreferrer">
+			Link do repozytorium na Githubie
+		</a>
+	</div>
+	{%endfor%}
+</div>
+{% endblock %}
