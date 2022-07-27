@@ -1,8 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block main %}
+<div class="row" id="categories">
+	{% for item in category %}
+	<div class="col-3 categories">
+		<a
+			href="{{ url_for('Category', category=item) }}"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<h3>{{ item }}</h3>
+			<img
+				src="{{ url_for('static', filename=img[item]) }}"
+				class="rounded"
+				alt="{{item}}"
+			/>
+		</a>
+	</div>
 
-{% block main %}
-    {% for item in category %}
-
-    {{ item }}
-    {% endfor %}
+	{% endfor %}
+</div>
 {% endblock %}

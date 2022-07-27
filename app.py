@@ -1,14 +1,13 @@
 import os
 from datetime import datetime
-
 from flask import Flask, render_template, redirect, url_for, session, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import ForeignKey
 from werkzeug.utils import secure_filename
-
 from Forms.AddPost import add_new_post
 from Forms.Login import Login
+from ListCategory import list_category, category_images
 
 # server name = wojtek92!
 # hasło Aparat22
@@ -81,15 +80,7 @@ def index():
 
 @app.route("/categories")
 def category():
-    list_posty = Post.query.all()
-    category_list = []
-    print(category)
-    for post in list_posty:
-        if (post.category in category_list):
-            ...
-        else:
-            category_list.append(post.category)
-    return render_template("categories.html", category=category_list)
+    return render_template("categories.html", category=list_category, img=category_images)
 @app.route("/category/<category>")
 def Category(category:str):
     list_posty = Post.query.filter_by(category=category)

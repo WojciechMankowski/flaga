@@ -136,6 +136,12 @@
   .category h3{
     text-align: center;
   }
+  .category button{
+    border: 3px $color_2 solid;
+    border-radius: 15px;
+    background-color: $color_2;
+    width: 25%;
+  }
 .posts{
   display: flex;
   flex-direction: row;
@@ -154,4 +160,24 @@
   width: 80%;
 
   margin-top: 20px;
+}
+#categories{
+  width: 100%;
+  text-align: center;
+}
+
+.categories{
+  width: 25%;
+  height: 100%;
+  margin-right: 50px;
+  
+}
+.categories a{
+  text-decoration: none;
+  color: #000;
+}
+.categories img{
+  width: 300px;
+  height: 205px;
+  padding-top: 20px;
 }
