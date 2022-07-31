@@ -1,0 +1,9 @@
+{% extends 'admin/BaseAdmin.html' %} {% block main %}
+<form method="post" enctype="multipart/form-data">
+	{{ form.csrf_token }} {{form.name.label}} {{form.name}}
+	{{form.programmingLanguage.label}} {{form.programmingLanguage(rows=3,
+	multiple=True) }} {{form.description.label}} {{form.description}}
+	{{form.url.label}} {{form.url}}
+	<input type="submit" value="Dodaj nowy project" class="btn btn-inf" />
+</form>
+{% endblock %}
