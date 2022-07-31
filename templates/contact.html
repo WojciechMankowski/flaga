@@ -1,5 +1,8 @@
-{% extends 'base.html' %}
-
-{% block main %}
-Strona kontakt
+{% extends 'base.html' %} {% block main %}
+<form method="post" enctype="multipart/form-data">
+	{{ form.csrf_token }} {{form.name.label}} {{form.name}} {{form.title.label}}
+	{{form.title}} {{form.email.label}} {{form.email}} {{form.message.label}}
+	{{form.message}}
+	<input type="submit" value="Dodaj nowy wpis" class="btn btn-inf" />
+</form>
 {% endblock %}

@@ -9,7 +9,7 @@ from Forms.AddPost import add_new_post
 from Forms.Login import Login
 from Forms.ProjectForm import Project
 from ListCategory import list_category, category_images
-
+from Forms.Contact import Contact
 # server name = wojtek92!
 # hasło Aparat22
 # name db blog
@@ -105,7 +105,10 @@ def Category(category: str):
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    form = Contact()
+    if form.validate_on_submit():
+        ...
+    return render_template("contact.html", form=form)
 
 
 @app.route("/<title>")

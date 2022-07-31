@@ -205,3 +205,33 @@ footer i {
   height: 150px;
   margin-bottom: 15px;
 }
+
+form label {
+  display: block;
+  text-align: center;
+  color: #377ba6;
+}
+
+form input,
+textarea {
+  display: block;
+  font-size: 21px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #6d6868;
+}
+
+input[type="submit"] {
+  display: block;
+  background-color: #f2b33d;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  color: #6d6868;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
