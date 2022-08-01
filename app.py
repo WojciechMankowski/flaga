@@ -10,7 +10,7 @@ from Forms.Login import Login
 from Forms.ProjectForm import Project
 from ListCategory import list_category, category_images
 from Forms.Contact import Contact
-from flask_mail import Mail, Message
+
 # server name = wojtek92!
 # hasło Aparat22
 # name db blog
@@ -20,15 +20,7 @@ app = Flask(__name__, static_folder='static')
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.db"
 app.config['SECRET_KEY'] = 'my_screat_key'
 app.config['UPLOAD_FOLDER'] = "./static/IMAG"
-# konfikuracja e-maila
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = os.getenv('mailuser')
-print(app.config['MAIL_USERNAME'])
-app.config['MAIL_PASSWORD'] = os.getenv("password")
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail = Mail(app)
+
 
 ALLOWED_EXTENSIONS = ["jpg", "png"]
 db = SQLAlchemy(app)
@@ -114,11 +106,13 @@ def Category(category: str):
     return render_template("category.html", category=category, list_posty=list_posty)
 
 
-@app.route("/contact")
+@app.route("/contact" , methods=["GET", "POST"])
 def contact():
     form = Contact()
+    print(form.validate_on_submit())
     if form.validate_on_submit():
-        ...
+        print(form.data)
+        return render_template("contact.html", form=form)
     return render_template("contact.html", form=form)
 
 
@@ -131,20 +125,9 @@ def post(title: str):
 @app.route("/portfolio")
 def portfolio():
     listportfolio = PortfolioDB.query.all()
-
     return render_template("portfolio.html", listportfolio=listportfolio)
 # podziękowania zapisania na newsletter
 # podziękowania za wysłanie wiadomości
-
-
-@app.route('/mail', methods=['GET', 'POST'])
-def email():
-    print(mail)
-    msg = Message("Hello", sender="wojtekm510@gmail.com",
-                  recipients=['wojtekm510@gmail.com'])
-    msg.body = "This is the email body"
-    mail.send(msg)
-    return "<h3>Wysłano</h3>"
 
 
 @app.route("/admin/login", methods=["GET", "POST"])

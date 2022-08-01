@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block main %}
+<h1>Dziękuję za Twoją wiadomość</h1>
+<p>
+	Właśnie dostałem od Ciebie otrzymałem wiadomość o temacie:
+	<strong>{{subject}}</strong>
+</p>
+<p>Wiadomość miała taką treść:</p>
+<div>
+	<p>{{contemt}}</p>
+</div>
+<h2>
+	Jeszcze raz dziękuję za wiadomość. Odpowiem Ci {{name}} jak najszybciej jak
+	tylko będą mógł
+</h2>
+
+{% endblock %}
